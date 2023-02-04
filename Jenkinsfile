@@ -5,7 +5,7 @@ options { timestamps ()        }
     stages {
         stage('Test') {
             steps{
-                echo 'Branch name: $BRANCH_NAME'
+                echo 'Branch name: ${env.BRANCH_NAME}'
             }
         }
     }
