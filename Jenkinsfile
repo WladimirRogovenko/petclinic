@@ -15,7 +15,8 @@ environment {
             steps{
                 script{
                 try {
-                    sh 'ping -c 1 -n -w 1 172.31.47.1 &> /dev/null'
+                    sh 'ping -c 1 -n -w 1 8.8.8.8 &> /dev/null'
+                    //172.31.47.1
                 }
                 catch (exc) {
                     echo 'No pings!'
