@@ -17,7 +17,7 @@ environment {
         }
         catch (exc) {
             echo 'No pings!'
-            ${TERRAFORM_NEEDS}='yes'
+            TERRAFORM_NEEDS='yes'
         }
     }
         stage('dev') {
