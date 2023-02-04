@@ -15,24 +15,40 @@ environment {
             steps{
                 script{
                 try {
-                    sh 'ping -c 1 -n -w 1 8.8.8.8 &> /dev/null'
-                    //172.31.47.1
+                    sh 'ping -c 1 -n -w 1 172.31.47.1 &> /dev/null'
                 }
                 catch (exc) {
-                    echo 'No pings!'
+                    echo 'No pings to 172.31.47.1  -- TERRAFORM_NEEDS=yes'
                     TERRAFORM_NEEDS='yes'
                 }
                 }
-                echo "123 TERRAFORM_NEEDS = ${TERRAFORM_NEEDS}"
+                echo "Ping result TERRAFORM_NEEDS = ${TERRAFORM_NEEDS}"
             }
         }
+         stage('Terraform Job') {
+            when {
+                environment name: 'TERRAFORM_NEEDS', value: 'yes'
+            }
+            steps{
+                echo "=== run Terraform main Job === "
+                echo "TERRAFORM_NEEDS = ${TERRAFORM_NEEDS}"
+                build job: 'petclinic-terraform', parameters: [string(name: 'environment', value: "${GIT_BRANCH}")]
+            }
+        }       
         stage('dev') {
             when {
                 branch 'dev'
             }
             steps{
-                echo "run dev stage "
+                echo "=== run dev stage - step 1 - BUILD ==="
                 echo "TERRAFORM_NEEDS = ${TERRAFORM_NEEDS}"
+                build job: 'petclinic-build', parameters: [string(name: 'environment_project', value: "${GIT_BRANCH}")]
+                echo "=== finish dev stage - step 1 - BUILD ==="
+            }
+            steps{
+                 echo "=== run dev stage - step 2 - Deploy ==="
+                 build job: 'dev-CD-petclinic', parameters: [string(name: 'environment_project', value: "${GIT_BRANCH}")]
+                 echo "=== finish dev stage - step 2 - Deploy ==="
             }
         }
         stage('main') {
