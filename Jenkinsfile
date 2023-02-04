@@ -20,11 +20,13 @@ environment {
                 catch (exc) {
                     echo 'No pings to 172.31.47.1  -- TERRAFORM_NEEDS=yes'
                     TERRAFORM_NEEDS='yes'
+                    build job: 'petclinic-terraform', parameters: [string(name: 'environment', value: "${GIT_BRANCH}")]
                 }
                 }
                 echo "Ping result TERRAFORM_NEEDS = ${TERRAFORM_NEEDS}"
             }
         }
+        /*
          stage('Terraform Job') {
             when {
                 environment name: 'TERRAFORM_NEEDS', value: 'yes'
@@ -34,7 +36,8 @@ environment {
                 echo "TERRAFORM_NEEDS = ${TERRAFORM_NEEDS}"
                 build job: 'petclinic-terraform', parameters: [string(name: 'environment', value: "${GIT_BRANCH}")]
             }
-        }       
+        } 
+        */      
         stage('dev') {
             when {
                 branch 'dev'
