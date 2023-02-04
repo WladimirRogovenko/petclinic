@@ -45,7 +45,7 @@ environment {
             steps{
                 echo "=== run dev stage - step 1 - BUILD ==="
                 echo "TERRAFORM_NEEDS = ${TERRAFORM_NEEDS}"
-                build job: 'petclinic-build', parameters: [string(name: 'environment_project', value: "${GIT_BRANCH}")]
+                build job: 'petclinic-build', parameters: [string(name: 'environment_code', value: "${GIT_BRANCH}")]
                 echo "=== finish dev stage - step 1 - BUILD ==="
 
                 echo "=== run dev stage - step 2 - Deploy ==="
