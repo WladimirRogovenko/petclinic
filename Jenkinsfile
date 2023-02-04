@@ -1,9 +1,12 @@
 //petclinic-dev
 pipeline{
 agent { label 'jenkins-master' }
-    stages{
+options { timestamps ()        }
+    stages {
         stage('Test') {
-            echo 'Branch name: $BRANCH_NAME'
+            steps{
+                echo 'Branch name: $BRANCH_NAME'
+            }
         }
     }
 } 
