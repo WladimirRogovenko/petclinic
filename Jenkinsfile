@@ -44,11 +44,10 @@ environment {
                 echo "TERRAFORM_NEEDS = ${TERRAFORM_NEEDS}"
                 build job: 'petclinic-build', parameters: [string(name: 'environment_project', value: "${GIT_BRANCH}")]
                 echo "=== finish dev stage - step 1 - BUILD ==="
-            }
-            steps{
-                 echo "=== run dev stage - step 2 - Deploy ==="
-                 build job: 'dev-CD-petclinic', parameters: [string(name: 'environment_project', value: "${GIT_BRANCH}")]
-                 echo "=== finish dev stage - step 2 - Deploy ==="
+
+                echo "=== run dev stage - step 2 - Deploy ==="
+                build job: 'dev-CD-petclinic', parameters: [string(name: 'environment_project', value: "${GIT_BRANCH}")]
+                echo "=== finish dev stage - step 2 - Deploy ==="
             }
         }
         stage('main') {
