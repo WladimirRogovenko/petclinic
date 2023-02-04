@@ -12,7 +12,6 @@ environment {
             }
         }
         stage('Infrastucture needs') {
-            steps{
                 try {
                     sh 'ping -c 1 -n -w 1 172.31.47.1 &> /dev/null'
                 }
@@ -20,7 +19,8 @@ environment {
                     echo 'No pings!'
                     TERRAFORM_NEEDS='yes'
                 }
-        
+            steps{
+                echo "123 TERRAFORM_NEEDS = ${TERRAFORM_NEEDS}"
             }
         }
         stage('dev') {
