@@ -11,15 +11,18 @@ environment {
                 echo "Branch name: ${BRANCH_NAME}  branch: ${GIT_BRANCH}"
             }
         }
-        stage('Infostucture needs') {
-        try {
-            sh 'ping -c 1 -n -w 1 172.31.47.1 &> /dev/null'
+        stage('Infrastucture needs') {
+            steps{
+                try {
+                    sh 'ping -c 1 -n -w 1 172.31.47.1 &> /dev/null'
+                }
+                catch (exc) {
+                    echo 'No pings!'
+                    TERRAFORM_NEEDS='yes'
+                }
+        
+            }
         }
-        catch (exc) {
-            echo 'No pings!'
-            TERRAFORM_NEEDS='yes'
-        }
-    }
         stage('dev') {
             when {
                 branch 'dev'
