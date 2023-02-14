@@ -1,14 +1,16 @@
 //petclinic-dev
 pipeline{
 agent { label 'jenkins-master' }
-options { timestamps ()        }
+options { timestamps ()
+          buildDiscarder(logRotator(numToKeepStr: '3'))
+}
 environment {
     TERRAFORM_NEEDS='no'
 }
     stages {
         stage('Test') {
             steps{
-                echo "Branch name: ${BRANCH_NAME}  branch: ${GIT_BRANCH}"
+                echo "Branch name BRANCH_NAME: ${BRANCH_NAME}  branch GIT_BRANCH: ${GIT_BRANCH}"
             }
         }
         stage('Infrastucture needs') {
