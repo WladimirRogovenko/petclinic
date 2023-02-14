@@ -40,7 +40,7 @@ environment {
                 echo "=== finish dev stage - step 1 - BUILD ==="
 
                 echo "=== run dev stage - step 2 - Deploy ==="
-                build job: 'dev-CD-petclinic', parameters: [string(name: 'environment_project', value: "${GIT_BRANCH}")]
+                build job: 'dev-CD-petclinic', parameters: [string(name: 'environment_project', value: "main")]
                 echo "=== finish dev stage - step 2 - Deploy ==="
             }
         }
